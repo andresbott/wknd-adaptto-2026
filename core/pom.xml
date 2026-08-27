@@ -43,7 +43,7 @@
                         <configuration>
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
--includeresource: jsoup-1.15.2.jar;lib:=true
+-includeresource: jsoup-1.23.2.jar;lib:=true
                                 ]]></bnd>
                         </configuration>
                     </execution>
@@ -85,13 +85,13 @@ Import-Package: javax.annotation;version=0.0.0,*
             <groupId>com.adobe.cq</groupId>
             <artifactId>core.wcm.components.core</artifactId>
         </dependency>
-        <!-- Embedded (vulnerable) Jsoup 1.15.2 - CVE-2022-36033 (fixed in 1.15.3).
-             The full jar is embedded into this OSGi bundle (see -includeresource above)
-             so security-scanning tooling flags it as an outdated/vulnerable library. -->
+        <!-- Jsoup 1.23.2 (patched) embedded into this OSGi bundle (see -includeresource
+             above). Upgraded from 1.15.2, which was flagged for CVE-2022-36033 and
+             CVE-2026-71497. -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.15.2</version>
+            <version>1.23.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
