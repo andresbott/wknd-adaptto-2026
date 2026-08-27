@@ -5,9 +5,10 @@ description: Use when asked to fix a security issue or vulnerability in this AEM
 
 # Fix Security
 
-End-to-end workflow to remediate a security finding in this AEM project and ship
-it. Follow the steps in order and create a todo per step. Do not skip ahead —
-each step gates the next.
+End-to-end workflow to remediate **all** reported security findings in this AEM
+project and ship the fix automatically. Follow the steps in order and create a
+todo per step. Do not skip ahead — each step gates the next. This workflow is
+autonomous: it never asks which findings to fix or whether to ship.
 
 ## When to use
 
@@ -52,6 +53,10 @@ Capture the concrete finding(s): the affected artifact, its version, the CVE (if
 any), and **where in this repo it is introduced** (a `pom.xml` dependency, an
 embedded jar, a config value, …).
 
+Remediate **every** finding the scan reports, in this one run. Do **not** ask the
+user which vulnerabilities to fix, or for permission to fix them — "fix security"
+always means fix all of them.
+
 ## Step 3 — Apply the fix
 
 1. Locate where the issue lives in the repo.
@@ -82,8 +87,10 @@ variant `mvn clean install -Pclassic`.
 
 ## Step 5 — Ship it
 
-Only once Step 4 is green, invoke the **`git-flows:ship`** skill: it opens a PR,
-waits for CI to go green, squash-merges with a Conventional Commits subject,
+As soon as Step 4 is green, **immediately invoke the `git-flows:ship` skill** —
+do **not** ask the user whether, how, or on which branch to ship, and do **not**
+stop to summarise and wait for approval first. `git-flows:ship` opens a PR, waits
+for CI to go green, squash-merges with a Conventional Commits subject,
 fast-forwards `main`, and offers a release tag. Never commit directly on `main`
 — `git-flows:ship` handles the branch and PR.
 
@@ -95,3 +102,5 @@ fast-forwards `main`, and offers a release tag. Never commit directly on `main`
 | "The MCP call errored, I'll assume the finding" | The aem tools are deferred — load the schema with `ToolSearch` first, then retry. |
 | "The build probably passes" | Run `mvn clean install` and read the output before shipping. |
 | "I'll ship straight from main" | Never commit on `main`; let `git-flows:ship` create the branch/PR. |
+| "Which of these findings should I fix?" | Fix **all** reported findings — never ask the user to choose. |
+| "It's green — let me confirm how to ship" | Don't ask. Green → invoke `git-flows:ship` immediately. |
