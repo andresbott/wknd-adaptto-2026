@@ -1,14 +1,15 @@
 ---
 name: fix-security
-description: Use when asked to fix a security issue or vulnerability in this AEM project (e.g. "fix security", a vulnerable/flagged dependency, an embedded vulnerable jar, or a failed security scan). Identifies the deployed AEM program from AGENTS.md, pulls environment details from the aem MCP server, applies the fix (dispatching specialist agents when domain judgement is needed), runs mvn validation locally, and ships via git-flows:ship once green.
+description: Use when asked to fix a security issue or vulnerability in this AEM project (e.g. "fix security", a vulnerable/flagged dependency, an embedded vulnerable jar, or a failed security scan). Identifies the deployed AEM program from AGENTS.md, pulls environment details from the aem MCP server, applies the fix (dispatching specialist agents when domain judgement is needed), runs mvn validation locally, then opens a PR and watches CI to green via git-flows:open-pr (stops there — does not merge).
 ---
 
 # Fix Security
 
 End-to-end workflow to remediate **all** reported security findings in this AEM
-project and ship the fix automatically. Follow the steps in order and create a
+project, then open a PR and watch its CI. Follow the steps in order and create a
 todo per step. Do not skip ahead — each step gates the next. This workflow is
-autonomous: it never asks which findings to fix or whether to ship.
+autonomous: it never asks which findings to fix or whether to open the PR. It
+stops once the PR's CI is green — it does **not** merge.
 
 ## When to use
 
@@ -85,14 +86,19 @@ read the actual error output, fix it, and re-run — never claim green without t
 output in hand. If the change could affect the classic profile, also run the CI
 variant `mvn clean install -Pclassic`.
 
-## Step 5 — Ship it
+## Step 5 — Open the PR & watch CI
 
-As soon as Step 4 is green, **immediately invoke the `git-flows:ship` skill** —
-do **not** ask the user whether, how, or on which branch to ship, and do **not**
-stop to summarise and wait for approval first. `git-flows:ship` opens a PR, waits
-for CI to go green, squash-merges with a Conventional Commits subject,
-fast-forwards `main`, and offers a release tag. Never commit directly on `main`
-— `git-flows:ship` handles the branch and PR.
+As soon as Step 4 is green, **immediately invoke the `git-flows:open-pr` skill**
+— do **not** ask the user whether, how, or on which branch to open the PR, and do
+**not** stop to summarise and wait for approval first. `git-flows:open-pr`
+commits the work on a branch, pushes, opens (or reuses) the PR, and watches every
+check to a terminal state. It **stops at a green PR — it does not merge**. Never
+commit directly on `main` — `git-flows:open-pr` handles the branch and PR.
+
+**Stop here.** Once the PR is open and CI is green, report the PR and finish. Do
+**not** merge, fast-forward `main`, cut a release tag, or invoke
+`git-flows:merge-pr` / `git-flows:ship` — merging is a separate step the user
+runs themselves.
 
 ## Red flags — stop and fix, don't skip
 
@@ -100,7 +106,8 @@ fast-forwards `main`, and offers a release tag. Never commit directly on `main`
 |---|---|
 | "I'll just guess the program" | Read `AGENTS.md`, or confirm via `list-aem-environments`, first. |
 | "The MCP call errored, I'll assume the finding" | The aem tools are deferred — load the schema with `ToolSearch` first, then retry. |
-| "The build probably passes" | Run `mvn clean install` and read the output before shipping. |
-| "I'll ship straight from main" | Never commit on `main`; let `git-flows:ship` create the branch/PR. |
+| "The build probably passes" | Run `mvn clean install` and read the output before opening the PR. |
+| "I'll open the PR straight from main" | Never commit on `main`; let `git-flows:open-pr` create the branch/PR. |
 | "Which of these findings should I fix?" | Fix **all** reported findings — never ask the user to choose. |
-| "It's green — let me confirm how to ship" | Don't ask. Green → invoke `git-flows:ship` immediately. |
+| "It's green — let me confirm how to open the PR" | Don't ask. Green → invoke `git-flows:open-pr` immediately. |
+| "CI is green, I'll merge/tag it too" | Stop at a green PR. Do **not** merge, fast-forward `main`, tag, or invoke `git-flows:merge-pr` / `git-flows:ship`. |
