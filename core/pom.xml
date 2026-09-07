@@ -43,7 +43,7 @@
                         <configuration>
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
--includeresource: jsoup-1.15.2.jar;lib:=true
+-includeresource: jsoup-1.23.2.jar;lib:=true
                                 ]]></bnd>
                         </configuration>
                     </execution>
@@ -91,7 +91,7 @@ Import-Package: javax.annotation;version=0.0.0,*
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.15.2</version>
+            <version>1.23.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
