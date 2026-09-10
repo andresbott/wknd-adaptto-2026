@@ -67,6 +67,7 @@
         <wknd-shared.65.version>2.2.2</wknd-shared.65.version>
         <aemanalyser.version>1.6.6</aemanalyser.version>
         <accesscontroltool.version>3.6.2</accesscontroltool.version>
+        <super-cool-bundle.version>1.0.0</super-cool-bundle.version>
     </properties>
 
     <organization>
@@ -747,6 +748,27 @@ Bundle-DocURL:
 -->
     </profiles>
 
+    <!-- ====================================================================== -->
+    <!-- R E P O S I T O R I E S                                                -->
+    <!-- ====================================================================== -->
+    <!-- JitPack builds the demo bundle on demand from its GitHub git tag
+         (github.com/andresbott/super-cool-bundle) and serves it as a normal
+         Maven artifact. The repo is public, so no auth/token is required. This is
+         what pulls in the vulnerable transitive dependency (snakeyaml 1.30). -->
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <name>JitPack</name>
+            <url>https://jitpack.io</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
 
     <!-- ====================================================================== -->
     <!-- D E P E N D E N C I E S -->
@@ -804,6 +826,14 @@ Bundle-DocURL:
                 <version>${accesscontroltool.version}</version>
                 <classifier>cloud</classifier>
                 <type>zip</type>
+            </dependency>
+
+            <!-- Demo: bundle that carries a vulnerable transitive dependency
+                 (snakeyaml 1.30, CVE-2022-1471); built from a GitHub tag by JitPack. -->
+            <dependency>
+                <groupId>com.github.andresbott</groupId>
+                <artifactId>super-cool-bundle</artifactId>
+                <version>${super-cool-bundle.version}</version>
             </dependency>
 
             <!-- Testing -->
