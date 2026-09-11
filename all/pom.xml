@@ -90,19 +90,11 @@
                             <type>zip</type>
                             <target>/apps/wknd-vendor-packages/content/install</target>
                         </embedded>
-                        <!-- Netcentric Access Control Tool (AEMaaCS - cloud classifier) -->
+                        <!-- Demo: bundle carrying a vulnerable transitive dependency
+                             (snakeyaml 1.30, CVE-2022-1471); built from a GitHub tag by JitPack. -->
                         <embedded>
-                            <groupId>biz.netcentric.cq.tools.accesscontroltool</groupId>
-                            <artifactId>accesscontroltool-package</artifactId>
-                            <classifier>cloud</classifier>
-                            <type>zip</type>
-                            <target>/apps/wknd-vendor-packages/application/install</target>
-                        </embedded>
-                        <embedded>
-                            <groupId>biz.netcentric.cq.tools.accesscontroltool</groupId>
-                            <artifactId>accesscontroltool-oakindex-package</artifactId>
-                            <classifier>cloud</classifier>
-                            <type>zip</type>
+                            <groupId>com.github.andresbott</groupId>
+                            <artifactId>super-cool-bundle</artifactId>
                             <target>/apps/wknd-vendor-packages/application/install</target>
                         </embedded>
                     </embeddeds>
@@ -339,18 +331,11 @@
             <artifactId>aem-guides-wknd-shared.ui.content</artifactId>
             <type>zip</type>
         </dependency>
-        <!-- Netcentric Access Control Tool (AEMaaCS - cloud classifier) -->
+        <!-- Demo: bundle carrying a vulnerable transitive dependency
+             (snakeyaml 1.30, CVE-2022-1471); built from a GitHub tag by JitPack. -->
         <dependency>
-            <groupId>biz.netcentric.cq.tools.accesscontroltool</groupId>
-            <artifactId>accesscontroltool-package</artifactId>
-            <classifier>cloud</classifier>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>biz.netcentric.cq.tools.accesscontroltool</groupId>
-            <artifactId>accesscontroltool-oakindex-package</artifactId>
-            <classifier>cloud</classifier>
-            <type>zip</type>
+            <groupId>com.github.andresbott</groupId>
+            <artifactId>super-cool-bundle</artifactId>
         </dependency>
     </dependencies>
 </project>
