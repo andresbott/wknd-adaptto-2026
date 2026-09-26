@@ -90,8 +90,8 @@
                             <type>zip</type>
                             <target>/apps/wknd-vendor-packages/content/install</target>
                         </embedded>
-                        <!-- Demo: bundle carrying a vulnerable transitive dependency
-                             (snakeyaml 1.30, CVE-2022-1471); built from a GitHub tag by JitPack. -->
+                        <!-- Demo: bundle carrying a transitive snakeyaml dependency
+                             (2.4, fixes CVE-2022-1471); built from a GitHub tag by JitPack. -->
                         <embedded>
                             <groupId>com.github.andresbott</groupId>
                             <artifactId>super-cool-bundle</artifactId>
@@ -331,8 +331,8 @@
             <artifactId>aem-guides-wknd-shared.ui.content</artifactId>
             <type>zip</type>
         </dependency>
-        <!-- Demo: bundle carrying a vulnerable transitive dependency
-             (snakeyaml 1.30, CVE-2022-1471); built from a GitHub tag by JitPack. -->
+        <!-- Demo: bundle carrying a transitive snakeyaml dependency
+             (2.4, fixes CVE-2022-1471); built from a GitHub tag by JitPack. -->
         <dependency>
             <groupId>com.github.andresbott</groupId>
             <artifactId>super-cool-bundle</artifactId>
